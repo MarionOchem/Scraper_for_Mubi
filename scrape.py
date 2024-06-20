@@ -59,7 +59,7 @@ def scrape_movies(driver):
     li_elements = soup.find_all("li", class_="css-1t2q5wf e18pxekp0")
     logger.info("number of li elements / movies : ", len(li_elements))
 
-    lesbianOrDyke_dic = {}
+    movies_dic = {}
     synopsis_link = []
 
     for li in li_elements:
@@ -89,7 +89,7 @@ def scrape_movies(driver):
 
 
         # Store movie data in the dictionary using the movie title as key
-        lesbianOrDyke_dic[title] = {
+        movies_dic[title] = {
             "director": director,
             "year": year,
             "country": country,
@@ -97,11 +97,11 @@ def scrape_movies(driver):
             "synopsis" : "https://mubi.com" + link
         }
 
-    return lesbianOrDyke_dic, synopsis_link
+    return movies_dic, synopsis_link
 
 
 # Handle the fetching, processing and storage of movie synopses
-def process_synopsis(lesbianOrDyke_dic, synopsis_link):
+def process_synopsis(movies_dic, synopsis_link):
     logger.info('Starting scraping synopsis')
 
     # Initialize a lock for dic data manipulation synchronization
@@ -134,7 +134,7 @@ def process_synopsis(lesbianOrDyke_dic, synopsis_link):
 
                     # Update the dictionary 
                     with lock:
-                        for title, info in lesbianOrDyke_dic.items():
+                        for title, info in movies_dic.items():
                             if info["synopsis"] == link:
                                 if synopsis.startswith('https://mubi.com'):
                                     # If synopsis indicates a url, keep it that way for re-fetching process of failed requests later
@@ -157,7 +157,7 @@ def process_synopsis(lesbianOrDyke_dic, synopsis_link):
             logger.info(f"Waiting for 10 minutes before fetching next batch...")
             time.sleep(600)
 
-    return lesbianOrDyke_dic, failed_request
+    return movies_dic, failed_request
 
 
 # Scrape synopsis from movie page 

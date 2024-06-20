@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # URL to scrap
-mubi_url = "https://mubi.com/fr/lists/dyke-cinema"
+mubi_url = 'https://mubi.com/fr/lists/<the list to scrap>' 
 
 def main():
     start_time = time.time()
@@ -25,21 +25,21 @@ def main():
 
         click_show_more_button(driver, mubi_url)
         time.sleep(10) # pause to ensure all content loads 
-        lesbianOrDyke_dic, synopsis_link = scrape_movies(driver) 
-        lesbianOrDyke_dic, failed_request = process_synopsis(lesbianOrDyke_dic, synopsis_link)
+        movies_dic, synopsis_link = scrape_movies(driver) 
+        movies_dic, failed_request = process_synopsis(movies_dic, synopsis_link)
 
         # Handle potential failed request during scraping
         if failed_request > 0:
             logger.info("Re-fetching failed requests")
             time.sleep(600) # cool-down-time to avoid error 429 or 405 from server
-            for title, info in lesbianOrDyke_dic.items():
+            for title, info in movies_dic.items():
                 if info["synopsis"] == info["synopsis"].startswith('https://mubi.com'):
                     url = info["synopsis"] 
                     retry_synopsis = scrape_synopsis(url)
                     logger.info(f"Re-fetching synopsis: {retry_synopsis} for link : {url}")
-                    lesbianOrDyke_dic[title]["synopsis"] = retry_synopsis
+                    movies_dic[title]["synopsis"] = retry_synopsis
 
-        export_data(lesbianOrDyke_dic, 'Lesbian_Or_Dyke.csv', 'Lesbian_Or_Dyke.sql', 'LesbianOrDyke')
+        export_data(movies_dic, '<file>.csv', '<file>.sql', '<sql_table_name>')
 
     except Exception as e:
         logger.error(f'Exception in main function : {e}')
