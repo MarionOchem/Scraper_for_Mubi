@@ -1,10 +1,15 @@
 # mubiScrap
 
 
-* Importer un .sql dans pgAdmin
-  
-  > Créer la database : 
-  Clique droit sur "Database" > Create > Database... > Donne un nom à la db > Save
+### Importer un .sql dans pgAdmin
 
-  > Peupler la databse avec le .sql : 
-  Clique droit sur la db créee > Query Tool > Clique sur le petit icon de fichier noire "Open File" > Sélectionne LesbianOrDyke.sql > Clique sur la flèche noire "Execute Script" 
+1. **Créer la database :**
+   - Cliquez droit sur "Database" > Create > Database...
+   - Donnez un nom à la base de données et cliquez sur "Save".
+
+2. **Peupler la base de données avec le .sql :**
+   - Cliquez droit sur la base de données créée.
+   - Sélectionnez "Query Tool".
+   - Cliquez sur l'icône de fichier noir "Open File".
+   - Sélectionnez le fichier `LesbianOrDyke.sql`.
+   - Cliquez sur la flèche noire "Execute Script".
