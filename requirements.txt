@@ -1,3 +1,6 @@
+# Lib that are not part of python standard library and need to be installed :
+# pip install -r requirements.txt
 requests
 beautifulsoup4
-psycopg2
+selenium
+unidecode 
